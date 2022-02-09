@@ -1,0 +1,13 @@
+from turtle import Turtle, Screen
+
+
+class CorrectAnswer(Turtle):
+    def __init__(self, name, x, y):
+        super().__init__()
+        self.name = name
+        self.penup()
+        self.hideturtle()
+        self.goto(x, y)
+        self.write(f"{self.name}", False, align="center", font=('Arial', 10, 'bold'))
+
+
