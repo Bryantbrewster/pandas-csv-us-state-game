@@ -1,0 +1,47 @@
+import turtle
+import pandas
+
+from answer import CorrectAnswer
+
+screen = turtle.Screen()
+screen.title('U.S. States Game')
+screen.bgpic('./blank_states_img.gif')
+
+data = pandas.read_csv('./50_states.csv')
+
+
+correct_guesses = []
+score = 0
+missed_states = []
+
+game_is_on = True
+while game_is_on == True:
+    guess = screen.textinput(f'{score}/50 State Correct', "What is another state's name?").title()
+    if guess == "Exit":
+        game_is_on = False
+        # break would also work here to break the while loop
+    if guess in set(data['state']):
+        state_row = data[data.state == guess]
+        x_cord = int(state_row.x)
+        y_cord = int(state_row.y)
+        correct_answer = CorrectAnswer(guess, x_cord, y_cord)
+        correct_guesses.append(guess)
+        score += 1
+
+
+for i in data.state:
+    if i not in correct_guesses:
+        missed_states.append(i)
+
+missed_df = pandas.DataFrame(missed_states)
+
+missed_df.to_csv('./missed_answers.csv')
+
+
+
+# screen.mainloop()
+
+
+
+
+
